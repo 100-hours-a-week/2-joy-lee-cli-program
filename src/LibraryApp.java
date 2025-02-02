@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LibraryApp {
     private static ArrayList<Material> materials = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // sample data
@@ -22,26 +24,56 @@ public class LibraryApp {
             System.out.println("2. 도서 대출하기");
             System.out.println("3. 도서 반납하기");
             System.out.println("0. 종료");
-            System.out.print("메뉴 선택: \n");
+            System.out.print("메뉴 선택: ");
 
-             // 도서 목록 출력
-             System.out.println("\n=== 도서 목록 ===");
+            // 사용자 선택
+            int num = scanner.nextInt();
 
-             System.out.println("\n📕 일반 도서");
-             for (Material resource : materials) {
-                 if (resource.id.startsWith("B")) {
-                     System.out.println(resource.getStatus());
-                 }
-             }
-             
-             System.out.println("\n📘 전자책");
-             for (Material resource : materials) {
-                 if (resource.id.startsWith("E")) {
-                     System.out.println(resource.getStatus());
-                 }
-             }
-             
-            running = false;
+            switch (num) {
+                case 1:
+                    showBookList();
+                    break;
+                case 2:
+                    checkOutBook();
+                    break;
+                case 3:
+                    returnBook();
+                    break;
+                case 0:
+                    running = false;
+                    System.out.println("프로그램을 종료합니다.");
+                    break;
+                default:
+                    System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
+            }
         }
+    }
+    
+    private static void showBookList() {
+        System.out.println("\n=== 도서 목록 ===");
+
+        System.out.println("\n📕 일반 도서");
+        for (Material resource : materials) {
+            if (resource.id.startsWith("B")) {
+                System.out.println(resource.getStatus());
+            }
+        }
+            
+        System.out.println("\n📘 전자책");
+        for (Material resource : materials) {
+            if (resource.id.startsWith("E")) {
+                System.out.println(resource.getStatus());
+            }
+        }
+    }
+
+    private static void checkOutBook() {
+        System.out.println("\n=== 도서 대출 ===");
+        System.out.print("대출할 도서 ID를 입력하세요: ");
+    }
+
+    private static void returnBook() {
+        System.out.println("\n=== 도서 반납 ===");
+        System.out.print("반납할 도서 ID를 입력하세요: ");
     }
 }
