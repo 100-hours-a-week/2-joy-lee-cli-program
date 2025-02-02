@@ -27,9 +27,7 @@ public class LibraryApp {
             System.out.print("메뉴 선택: ");
 
             // 사용자 선택
-            int num = scanner.nextInt();
-
-            switch (num) {
+            switch (scanner.nextInt()) {
                 case 1:
                     showBookList();
                     break;
@@ -70,10 +68,58 @@ public class LibraryApp {
     private static void checkOutBook() {
         System.out.println("\n=== 도서 대출 ===");
         System.out.print("대출할 도서 ID를 입력하세요: ");
+
+        scanner.nextLine(); // 이전 입력 버퍼 비우기
+        String id = scanner.nextLine();
+
+        // 입력된 ID로 도서 찾기
+        Material book = null;
+        for (Material material : materials) {
+            if (material.id.equals(id)) {
+                book = material;
+                break;
+            }
+        }
+
+        // 도서 대출 처리
+        if (book == null) {
+            System.out.println("해당 도서를 찾을 수 없습니다.");
+        } else {
+            if (book.isAvailable) {
+                book.checkOut();
+                System.out.println("\n[" + book.title + "] 대출이 완료되었습니다.");
+            } else {
+                System.out.println("이미 대출 중인 도서입니다.");
+            }
+        }
     }
 
     private static void returnBook() {
         System.out.println("\n=== 도서 반납 ===");
         System.out.print("반납할 도서 ID를 입력하세요: ");
+        
+        scanner.nextLine(); // 이전 입력 버퍼 비우기
+        String id = scanner.nextLine();
+
+        // 입력된 ID로 도서 찾기
+        Material book = null;
+        for (Material material : materials) {
+            if (material.id.equals(id)) {
+                book = material;
+                break;
+            }
+        }
+
+        // 도서 반납 처리
+        if (book == null) {
+            System.out.println("해당 도서를 찾을 수 없습니다.");
+        } else {
+            if (!book.isAvailable) {
+                book.returnItem();
+                System.out.println("\n[" + book.title + "] 반납이 완료되었습니다.");
+            } else {
+                System.out.println("대출 중인 도서가 아닙니다.");
+            }
+        }
     }
 }

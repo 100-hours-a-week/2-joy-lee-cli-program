@@ -16,7 +16,7 @@ public class Material {
     // 대출 method
     public void checkOut() {
         if (isAvailable) {
-            // 대출 완료
+            isAvailable = false;
         } else {
             // 이미 대출 중
         }
@@ -25,7 +25,7 @@ public class Material {
     // 반납 method
     public void returnItem() {
         if (!isAvailable) {
-            // 반납 완료
+            isAvailable = true;
         } else {
             // 반납 불가능. 다시 확인
         }
