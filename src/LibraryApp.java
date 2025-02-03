@@ -89,12 +89,7 @@ public class LibraryApp {
         if (book == null) {
             System.out.println("해당 도서를 찾을 수 없습니다.");
         } else {
-            if (book.isAvailable) {
-                book.checkOut();
-                System.out.println("\n[" + book.title + "] 대출이 완료되었습니다.");
-            } else {
-                System.out.println("이미 대출 중인 도서입니다.");
-            }
+            book.checkOut();
         }
     }
 
@@ -118,12 +113,7 @@ public class LibraryApp {
         if (book == null) {
             System.out.println("해당 도서를 찾을 수 없습니다.");
         } else {
-            if (!book.isAvailable) {
-                book.returnItem();
-                System.out.println("\n[" + book.title + "] 반납이 완료되었습니다.");
-            } else {
-                System.out.println("대출 중인 도서가 아닙니다.");
-            }
+            book.returnItem();
         }
     }
 }
