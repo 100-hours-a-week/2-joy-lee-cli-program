@@ -19,38 +19,45 @@ public class LibraryApp {
 
         boolean running = true;
         while (running) {
-            System.out.println("\n┌──────────────────────────────┐");
-            System.out.println("│    카부캠 도서관리 봇 🤖     │");
-            System.out.println("│    무엇을 도와드릴까요?      │");
-            System.out.println("├──────────────────────────────┤");
-            System.out.println("│  1. 전체 도서 보기           │");
-            System.out.println("│  2. 도서 대출하기            │");
-            System.out.println("│  3. 도서 반납하기            │");
-            System.out.println("│  0. 종료                     │");
-            System.out.println("└──────────────────────────────┘");
-            System.out.print("번호 선택: ");
-
-            // 사용자 선택
-            switch (scanner.nextInt()) {
-                case 1:
-                    showBookList();
-                    break;
-                case 2:
-                    checkOutBook();
-                    break;
-                case 3:
-                    returnBook();
-                    break;
-                case 0:
-                    running = false;
-                    System.out.println("프로그램을 종료합니다.");
-                    break;
-                default:
-                    System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
+            displayIntro(); // 인트로 메세지
+            try{
+                switch (scanner.nextInt()) {
+                    case 1:
+                        showBookList();
+                        break;
+                    case 2:
+                        checkOutBook();
+                        break;
+                    case 3:
+                        returnBook();
+                        break;
+                    case 0:
+                        running = false;
+                        System.out.println("프로그램을 종료합니다.");
+                        break;
+                    default:
+                        System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
+                }
+            } catch (Exception e) {
+                System.out.println("오류가 발생했습니다: " + e.getMessage());
             }
         }
     }
     
+    private static void displayIntro() {
+        System.out.println("""
+            \n┌──────────────────────────────┐
+            │    카부캠 도서관리 봇 🤖     │
+            │    무엇을 도와드릴까요?      │
+            ├──────────────────────────────┤
+            │  1. 전체 도서 보기           │
+            │  2. 도서 대출하기            │
+            │  3. 도서 반납하기            │
+            │  0. 종료                     │
+            └──────────────────────────────┘""");
+        System.out.print("번호 선택: ");
+    }
+
     private static void showBookList() {
         System.out.println("\n=== 도서 목록 ===");
 
