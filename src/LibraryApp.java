@@ -2,16 +2,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LibraryApp {
-     // 인스턴스 변수 선언
-     private Scanner scanner;
-     private LibraryService libraryService;
+    // 인스턴스 변수 선언
+    private Scanner scanner;
+    private LibraryService libraryService;
 
     // 생성자로 인스턴스 변수 초기화
     public LibraryApp() {
         this.scanner = new Scanner(System.in);
         this.libraryService = new LibraryService(); // 비즈니스 로직 클래스
     }
-    
 
     public void run() {
         boolean running = true;
@@ -35,8 +34,7 @@ public class LibraryApp {
                     default:
                         System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
                 }
-            } 
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("0~3까지의 숫자만 입력해주세요");
                 scanner.nextLine(); // 잘못된 입력 비우기
             }
@@ -90,7 +88,6 @@ public class LibraryApp {
             │  도서 ID 형식: 코드 + 숫자 3자리     │
             │  ✔️ 코드 : 종이책(B) / 전자책(E)      │
             └──────────────────────────────────────┘""");
-    
     }
 
     private boolean validateBook(String id) {

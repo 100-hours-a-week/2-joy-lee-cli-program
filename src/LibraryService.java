@@ -1,8 +1,11 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class LibraryService {
     private ArrayList<Material> materials;
-    
+
     public LibraryService() {
         materials = new ArrayList<>();
         init();
@@ -10,31 +13,46 @@ public class LibraryService {
 
     // 샘플 데이터 초기화
     private void init() {
-        // 일반 도서 추가
-        materials.add(new Book("B001", "리팩터링 2판 (개정판)", "마틴 파울러", "한빛미디어", 550));
-        materials.add(new Book("B002", "클린 코드 Clean Code", "로버트 C. 마틴", "인사이트", 584));
-        materials.add(new Book("B003", "우아한 타입스크립트 with 리액트", "우아한형제들", "한빛미디어", 380));
-        materials.add(new Book("B004", "HTTP 완벽 가이드", "데이빗 고울리,브라이언 토티", "인사이트", 380));
-        
-        // 전자책 추가
-        materials.add(new EBook("E001", "클라우드 전환 그 실제 이야기", "공용준", "에이콘출판", 244));
-        materials.add(new EBook("E002", "함께 자라기", "김창준", "인사이트", 228));
-        materials.add(new EBook("E003", "손에 잡히는 10분 SQL", "벤 포터", "인사이트", 320));
-        materials.add(new EBook("E004", "스프링 입문을 위한 자바 객체 지향의 원리와 이해", "김종민", "위키북스", 396));
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader("db/books.txt"));
+            List<String> lines = reader.lines().toList(); // db 파일 텍스트를 리스트로 변환
+
+            for(String line : lines) {
+                String[] data = line.split(",");
+
+                String id = data[0];
+                String title = data[1];
+                String author = data[2];
+                String publisher = data[3];
+                int pages = Integer.parseInt(data[4]);
+
+                // 코드에 따라 Book 또는 EBook 객체 생성
+                if(id.startsWith("B")){
+                    Book book = new Book(id, title, author, publisher, pages);
+                    materials.add(book);
+                } else if(id.startsWith("E")){
+                    EBook ebook = new EBook(id, title, author, publisher, pages);
+                    materials.add(ebook);
+                }
+            }
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("도서 데이터 파일을 불러오는데 실패했습니다. 다시 시도해 주세요");
+        }
     }
 
     public void showBookList() {
         System.out.println("\n📕 일반 도서");
-        for (Material resource : materials) {
-            if (resource.id.startsWith("B")) {
-                System.out.println(resource.getStatus());
+        for (Material material : materials) {
+            if (material.id.startsWith("B")) {
+                System.out.println(material.getStatus());
             }
         }
             
         System.out.println("\n📘 전자책");
-        for (Material resource : materials) {
-            if (resource.id.startsWith("E")) {
-                System.out.println(resource.getStatus());
+        for (Material material : materials) {
+            if (material.id.startsWith("E")) {
+                System.out.println(material.getStatus());
             }
         }
     }
