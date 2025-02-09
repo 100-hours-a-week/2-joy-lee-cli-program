@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LibraryApp {
@@ -35,8 +35,10 @@ public class LibraryApp {
                     default:
                         System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
                 }
-            } catch (Exception e) {
-                System.out.println("오류가 발생했습니다: " + e.getMessage());
+            } 
+            catch (InputMismatchException e) {
+                System.out.println("0~3까지의 숫자만 입력해주세요");
+                scanner.nextLine(); // 잘못된 입력 비우기
             }
         }
     }
@@ -61,23 +63,49 @@ public class LibraryApp {
     }
 
     private void checkOutBook() {
-        System.out.println("\n=== 도서 대출 ===");
+        printHeader("도서 대출 📤");
         System.out.print("대출할 도서 ID를 입력하세요: ");
-
+        
         scanner.nextLine(); 
         String id = scanner.nextLine();
-        libraryService.checkOutBook(id);
+        
+        if (validateBook(id)) libraryService.checkOutBook(id); // ID 유효성 검사
     }
 
     private void returnBook() {
-        System.out.println("\n=== 도서 반납 ===");
+        printHeader("도서 반납 📥");
         System.out.print("반납할 도서 ID를 입력하세요: ");
 
         scanner.nextLine(); 
         String id = scanner.nextLine();
-        libraryService.returnBook(id);
+
+        if (validateBook(id)) libraryService.returnBook(id); // ID 유효성 검사
     }
+
+    private void printHeader(String title) {
+        System.out.println("\n┌──────────────────────────────────────┐");
+        System.out.println("│             " + title + "             │");
+        System.out.println("""
+            ├──────────────────────────────────────┤
+            │  도서 ID 형식: 코드 + 숫자 3자리     │
+            │  ✔️ 코드 : 종이책(B) / 전자책(E)      │
+            └──────────────────────────────────────┘""");
     
+    }
+
+    private boolean validateBook(String id) {
+        if (id.isEmpty()) {
+            System.out.println("❓ 도서 ID를 입력해주세요.");
+            return false;
+        }
+    
+        if (!id.matches("^[BE]\\d{3}$")) {
+            System.out.println("❌ 잘못된 도서 ID 형식입니다.");
+            return false;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         LibraryApp app = new LibraryApp();
         app.run();
