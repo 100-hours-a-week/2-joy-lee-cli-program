@@ -2,10 +2,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LibraryApp {
-    private static ArrayList<Material> materials = new ArrayList<>();
-    static Scanner scanner = new Scanner(System.in);
+    // 인스턴스 변수 선언
+    private ArrayList<Material> materials;
+    private Scanner scanner;
 
-    public static void main(String[] args) {
+   // 생성자로 인스턴스 변수 초기화
+   public LibraryApp() {
+       this.materials = new ArrayList<>();
+       this.scanner = new Scanner(System.in);
+   }
+
+    public void run() {
         // sample data
         materials.add(new Book("B001", "리팩터링 2판 (개정판)", "마틴 파울러", "한빛미디어", 550 ));
         materials.add(new Book("B002", "클린 코드 Clean Code", "로버트 C. 마틴", "인사이트", 584));
@@ -44,7 +51,7 @@ public class LibraryApp {
         }
     }
     
-    private static void displayIntro() {
+    private void displayIntro() {
         System.out.println("""
             \n┌──────────────────────────────┐
             │    카부캠 도서관리 봇 🤖     │
@@ -58,7 +65,7 @@ public class LibraryApp {
         System.out.print("번호 선택: ");
     }
 
-    private static void showBookList() {
+    private void showBookList() {
         System.out.println("\n=== 도서 목록 ===");
 
         System.out.println("\n📕 일반 도서");
@@ -76,7 +83,7 @@ public class LibraryApp {
         }
     }
 
-    private static void checkOutBook() {
+    private void checkOutBook() {
         System.out.println("\n=== 도서 대출 ===");
         System.out.print("대출할 도서 ID를 입력하세요: ");
 
@@ -100,7 +107,7 @@ public class LibraryApp {
         }
     }
 
-    private static void returnBook() {
+    private void returnBook() {
         System.out.println("\n=== 도서 반납 ===");
         System.out.print("반납할 도서 ID를 입력하세요: ");
         
@@ -122,5 +129,10 @@ public class LibraryApp {
         } else {
             book.returnItem();
         }
+    }
+
+    public static void main(String[] args) {
+        LibraryApp app = new LibraryApp();
+        app.run();
     }
 }
