@@ -10,8 +10,20 @@ public class Book extends Material {
         this.pageCount = pageCount;
     }
 
-    public void getBookInfo() {
-        // 작가, 출판사 출력
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public int getPageCount() {
+        return pageCount;
     }
     
     public void renewLoan() {

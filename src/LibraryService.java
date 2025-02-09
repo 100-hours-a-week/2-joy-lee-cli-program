@@ -90,7 +90,30 @@ public class LibraryService {
     
     // 도서 검색하기
     public void searchBook(String keyword, int type) {
-        System.out.println(keyword + " searching...");
+        List<Material> result = new ArrayList<>();
+
+        for (Material material : materials) {
+            if (material instanceof Book book) {
+                String target = switch (type) {
+                    case 1 -> book.getTitle();
+                    case 2 -> book.getAuthor();
+                    case 3 -> book.getPublisher();
+                    default -> "";
+                };
+            
+                if (target.contains(keyword)) result.add(material);
+            }
+        }
+        
+        // 검색 결과 출력 부분
+        if (result.isEmpty()) {
+            System.out.println("\n도서를 찾을 수 없습니다. 😭");
+        } else {
+            System.out.println("\n === 검색 결과 ===");
+            for (Material material : result) {
+                System.out.println(material.getStatus());
+            }
+        }
     }
 
     // ID로 도서 찾기
