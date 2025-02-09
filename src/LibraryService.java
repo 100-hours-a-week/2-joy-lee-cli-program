@@ -87,6 +87,11 @@ public class LibraryService {
             book.returnItem();
         }
     }
+    
+    // 도서 검색하기
+    public void searchBook(String keyword, int type) {
+        System.out.println(keyword + " searching...");
+    }
 
     // ID로 도서 찾기
     private Material findBookById(String id) {
