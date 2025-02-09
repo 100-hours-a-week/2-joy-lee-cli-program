@@ -44,7 +44,7 @@ public class Material {
         "대출중 (반납예정일: " + formatDate(dueDate) + ")");
     }
 
-    private String formatDate(LocalDate date) {
+    public String formatDate(LocalDate date) {
         return date.getYear() + "년 " + date.getMonthValue() + "월 " + date.getDayOfMonth() + "일";
     }
 }

@@ -25,8 +25,4 @@ public class Book extends Material {
     public int getPageCount() {
         return pageCount;
     }
-    
-    public void renewLoan() {
-        // 대출 기간 연장
-    }
 }
