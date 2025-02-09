@@ -11,7 +11,6 @@ public class LibraryService {
         init();
     }
 
-    // 샘플 데이터 초기화
     private void init() {
         try{
             BufferedReader reader = new BufferedReader(new FileReader("db/books.txt"));
@@ -41,7 +40,19 @@ public class LibraryService {
         }
     }
 
+    public void manageBook(String id, String service){
+        if(!isValidated(id)) return;
+
+        if(service.equals("대출")) {
+            checkOutBook(id);
+        } else if (service.equals("반납")) {
+            returnBook(id);
+        }
+    }
+
+    // 도서 전체 목록
     public void showBookList() {
+        System.out.println("\n=== 도서 목록 ===");
         System.out.println("\n📕 일반 도서");
         for (Material material : materials) {
             if (material.id.startsWith("B")) {
@@ -86,4 +97,19 @@ public class LibraryService {
         }
         return null;
     }
+
+    // 유효성 검사
+    private boolean isValidated(String id) {
+        if (id.isEmpty()) {
+            System.out.println("❓ 도서 ID를 입력해주세요.");
+            return false;
+        }
+    
+        if (!id.matches("^[BE]\\d{3}$")) {
+            System.out.println("❌ 잘못된 도서 ID 형식입니다.");
+            return false;
+        }
+        return true;
+    }
+
 }
